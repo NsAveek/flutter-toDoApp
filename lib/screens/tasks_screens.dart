@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:todoey/widgets/tasks_list.dart';
 
 class TasksScreen extends StatelessWidget {
+  Widget buildBottomSheet(BuildContext context) {
+    return Container();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: GestureDetector(
-        onTap: (){
+        onTap: () {
           print('tapped');
         },
         child: FloatingActionButton(
           backgroundColor: Colors.lightBlueAccent,
           child: Icon(Icons.add),
+          onPressed: () {
+            showModalBottomSheet(context: context, builder: buildBottomSheet);
+          },
         ),
       ),
       backgroundColor: Colors.lightBlueAccent,
@@ -18,8 +26,8 @@ class TasksScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            padding:
-                EdgeInsets.only(top: 60.0, left: 30.0, right: 30.0, bottom: 30.0),
+            padding: EdgeInsets.only(
+                top: 60.0, left: 30.0, right: 30.0, bottom: 30.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
@@ -49,20 +57,19 @@ class TasksScreen extends StatelessWidget {
                       fontSize: 20.0,
                       fontWeight: FontWeight.w100),
                 ),
-
               ],
             ),
           ),
           Expanded(
             child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  )
-              ),
-            ),
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    )),
+                child: TasksList()),
           )
         ],
       ),
