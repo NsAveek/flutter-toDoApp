@@ -1,49 +1,63 @@
 import 'package:flutter/material.dart';
 
-class TaskTile extends StatefulWidget {
-  @override
-  _TaskTileState createState() => _TaskTileState();
-}
+/*
+* Stateful Widget => Can have properties that can vary
+*                 => Allow setState() to update the screen
+* Stateless Widget => Can not have properties that can vary
+*                  => There is no state to set, so setState() not applicable
+*
+* No need to have two Stateless widget at the same place rather we should marge it wherever possible
+*
+* */
 
-class _TaskTileState extends State<TaskTile> {
-  bool isChecked = false;
+
+class TaskTile extends StatelessWidget {
+  final bool isChecked;
+  final String taskTitle;
+  final Function checkBoxCallBack;
+
+  TaskTile({this.isChecked, this.taskTitle, this.checkBoxCallBack});
 
   void checkBoxOnCheckedChange(newCheckedVal) {
-    setState(() {
-      isChecked = newCheckedVal;
-    });
+  //    setState(() {
+  //      isChecked = newCheckedVal;
+  //    });
   }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(
-        'Buy Milk',
-        style: TextStyle(decoration: isChecked?TextDecoration.lineThrough : TextDecoration.none),
+        taskTitle,
+        style: TextStyle(decoration: isChecked? TextDecoration.lineThrough : TextDecoration.none),
       ),
-      trailing: TaskCheckBox(
-        isChecked: isChecked,
-        onCheckedChange: checkBoxOnCheckedChange,
-      ),
+      trailing: Checkbox(
+        activeColor: Colors.lightBlueAccent,
+        value: isChecked,
+        onChanged: checkBoxCallBack,
+      )
     );
   }
 }
-
-class TaskCheckBox extends StatelessWidget {
-  final bool isChecked;
-  final Function onCheckedChange;
-
-  TaskCheckBox({this.isChecked, this.onCheckedChange});
-
-  @override
-  Widget build(BuildContext context) {
-    return Checkbox(
-      activeColor: Colors.lightBlueAccent,
-      value: isChecked,
-      onChanged: onCheckedChange,
-    );
-  }
-}
+//TaskCheckBox(
+//isChecked: isChecked,
+//onCheckedChange: checkBoxOnCheckedChange,
+//),
+//class TaskCheckBox extends StatelessWidget {
+//  final bool isChecked;
+//  final Function onCheckedChange;
+//
+//  TaskCheckBox({this.isChecked, this.onCheckedChange});
+//
+//  @override
+//  Widget build(BuildContext context) {
+//    return Checkbox(
+//      activeColor: Colors.lightBlueAccent,
+//      value: isChecked,
+//      onChanged: onCheckedChange,
+//    );
+//  }
+//}
 
 //
 //class TaskCheckBox extends StatefulWidget {
