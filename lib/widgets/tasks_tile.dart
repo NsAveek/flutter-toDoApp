@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/models/task_data.dart';
 
 /*
 * Stateful Widget => Can have properties that can vary
@@ -15,27 +17,24 @@ class TaskTile extends StatelessWidget {
   final bool isChecked;
   final String taskTitle;
   final Function checkBoxCallBack;
+  final Function longPressCallBack;
 
-  TaskTile({this.isChecked, this.taskTitle, this.checkBoxCallBack});
-
-  void checkBoxOnCheckedChange(newCheckedVal) {
-  //    setState(() {
-  //      isChecked = newCheckedVal;
-  //    });
-  }
-
+  TaskTile({this.isChecked, this.taskTitle, this.checkBoxCallBack, this.longPressCallBack});
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(
-        taskTitle,
-        style: TextStyle(decoration: isChecked? TextDecoration.lineThrough : TextDecoration.none),
-      ),
-      trailing: Checkbox(
-        activeColor: Colors.lightBlueAccent,
-        value: isChecked,
-        onChanged: checkBoxCallBack,
-      )
+        onLongPress: longPressCallBack,
+        title: Text(
+          taskTitle,
+          style: TextStyle(decoration: isChecked
+              ? TextDecoration.lineThrough
+              : TextDecoration.none),
+        ),
+        trailing: Checkbox(
+          activeColor: Colors.lightBlueAccent,
+          value: isChecked,
+          onChanged: checkBoxCallBack,
+        )
     );
   }
 }

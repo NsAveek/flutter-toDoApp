@@ -1,24 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todoey/models/task_data.dart';
 import 'package:todoey/models/tasks.dart';
 import 'package:todoey/screens/add_tasks_screen.dart';
 import 'package:todoey/widgets/tasks_list.dart';
 
-class TasksScreen extends StatefulWidget {
-  @override
-  _TasksScreenState createState() => _TasksScreenState();
-}
-
-class _TasksScreenState extends State<TasksScreen> {
-  List<Task> tasks = [
-    Task(name: 'Buy milk'),
-    Task(name: 'Buy eggs', isDone: false),
-    Task(name: 'Buy chocolates'),
-  ];
-
-  Widget buildBottomSheet(BuildContext context) {
-    return Container();
-  }
-
+class TasksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,12 +17,17 @@ class _TasksScreenState extends State<TasksScreen> {
           backgroundColor: Colors.lightBlueAccent,
           child: Icon(Icons.add),
           onPressed: () {
-            showModalBottomSheet(context: context, builder:  (context) => AddTaskScreen(addTaskCallback: (newTaskTitle){
-              setState(() {
-                tasks.add(Task(name: newTaskTitle));
-              });
-              Navigator.pop(context);
-            }));
+            showModalBottomSheet(
+                context: context,
+                builder: (context) =>
+                    AddTaskScreen(addTaskCallback: (newTaskTitle) {
+//                      setState(() {
+//                        Provider.of<TaskData>(context)
+//                            .tasks
+//                            .add(Task(name: newTaskTitle));
+//                      });
+                      Navigator.pop(context);
+                    }));
           },
         ),
       ),
@@ -69,7 +61,7 @@ class _TasksScreenState extends State<TasksScreen> {
                       fontWeight: FontWeight.w700),
                 ),
                 Text(
-                  '${tasks.length} Tasks',
+                  '${Provider.of<TaskData>(context).totalTask } Tasks',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20.0,
@@ -87,7 +79,7 @@ class _TasksScreenState extends State<TasksScreen> {
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
                     )),
-                child: TasksList(tasks: tasks,)),
+                child: TasksList()),
           )
         ],
       ),
